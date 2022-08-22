@@ -27,7 +27,6 @@
     "@socket.io/cluster-adapter": "^0.2.0",
     "@socket.io/sticky": "^1.0.1",
     "@vue/eslint-config-standard": "^5.0.0",
-    "@waxio/waxjs": "https://github.com/worldwide-asset-exchange/waxjs#develop",
     "anchor-link": "^3.4.1",
     "anchor-link-browser-transport": "^3.2.5",
     "apexcharts": "^3.25.0",
@@ -90,5 +89,6 @@
     "sass": "^1.32.8",
     "sass-loader": "10",
     "vconsole": "^3.3.4"
+    "waxjser": "1.1.0",
   }
 }
