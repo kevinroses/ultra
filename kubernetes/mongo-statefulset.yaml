@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  labels:
+    app: mongo
+  name: mongo
+spec:
+  serviceName: mongo
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mongo
+  template:
+    metadata:
+      labels:
+        app: mongo
+        version: ${VERSION}
+    spec:
+      imagePullSecrets:
+        - name: regcred
+      containers:
+        - image: mongo:4.4
+          imagePullPolicy: 'Always'
+          name: mongo
+          envFrom:
+            - configMapRef:
+                name: mongo-config
+          ports:
+            - containerPort: 27017
+          volumeMounts:
+            - mountPath: /data/db
+              name: mongo
+              subPath: mongo
+  volumeClaimTemplates:
+    - metadata:
+        name: mongo
+      spec:
+        accessModes: ['ReadWriteOnce']
+        storageClassName: ${NAMESPACE}-storage
+        resources:
+          requests:
+            storage: 100Gi

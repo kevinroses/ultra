@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: proxy
+  name: proxy
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: proxy
+  template:
+    metadata:
+      labels:
+        app: proxy
+    spec:
+      imagePullSecrets:
+        - name: regcred
+      containers:
+        - image: ${DOCKER_HUB_USER}/${IMAGE_NAME_PROXY}:${VERSION}
+          imagePullPolicy: 'Always'
+          name: proxy
+          ports:
+            - containerPort: 80
+      restartPolicy: Always

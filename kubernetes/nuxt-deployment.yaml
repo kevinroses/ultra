@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: nuxt
+  name: nuxt
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nuxt
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: nuxt
+    spec:
+      imagePullSecrets:
+        - name: regcred
+      containers:
+        - image: ${DOCKER_HUB_USER}/${IMAGE_NAME_NUXT}:${VERSION}
+          imagePullPolicy: 'Always'
+          name: 'nuxt'
+          envFrom:
+            - configMapRef:
+                name: nuxt-config
+          ports:
+            - containerPort: 7000
+            - containerPort: 7001
